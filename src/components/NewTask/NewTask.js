@@ -3,7 +3,7 @@ import Section from "../UI/Section";
 import TaskForm from "./TaskForm";
 
 const NewTask = (props) => {
-  const [isLoading, error, sendRequest: sendTaskRequest] = useHttp();
+  const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
 
   const createTask = (taskText, taskData) => {
     const generatedId = taskData.name; // firebase-specific => "name" contains generated id
