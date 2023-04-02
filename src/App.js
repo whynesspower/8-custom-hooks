@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Tasks from "./components/Tasks/Tasks";
 import NewTask from "./components/NewTask/NewTask";
 import useHttp from "./hooks/use-http";
-import { useCallback } from "react/cjs/react.production.min";
+// import { useCallback, useMemo } from "react/cjs/react.production.min";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  
+
   const transFormTasks = useCallback((tasksObj) => {
     const loadedTasks = [];
     for (const taskKey in tasksObj) {
@@ -15,13 +15,21 @@ function App() {
     setTasks(loadedTasks);
   }, []);
 
+  // adding useMemo so that the URL object is not being created again and again.
+  // this is required a part of adding fetchTasks to useEffect dependacy at the same time
+  // avoiding infinite loop, by using useCallback to the function objects
+  const realURL = useMemo(
+    () => "https://practicing-get-post-default-rtdb.firebaseio.com/tasks.json",
+    []
+  );
+
   const {
     isLoading,
     error,
     sendRequest: fetchTasks,
   } = useHttp(
     {
-      url: "https://practicing-get-post-default-rtdb.firebaseio.com/tasks.json",
+      url: realURL,
     },
     transFormTasks
   );

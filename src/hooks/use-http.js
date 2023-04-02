@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useCallback } from "react/cjs/react.production.min";
+import { useState, useCallback } from "react";
+// import {  } from "react/cjs/react.production.min";
 
 const useHttp = (requestConfig, applyData) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ const useHttp = (requestConfig, applyData) => {
       setError(err.message || "Something went wrong!");
     }
     setIsLoading(false);
-  }, []);
+  }, [requestConfig, applyData]);
   return {
     isLoading,
     error,
