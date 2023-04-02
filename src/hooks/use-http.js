@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react";
 // import {  } from "react/cjs/react.production.min";
 
-const useHttp = (requestConfig, applyData) => {
+const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = useCallback(async () => {
+  const sendRequest = useCallback(async (requestConfig, applyData) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -25,7 +25,7 @@ const useHttp = (requestConfig, applyData) => {
       setError(err.message || "Something went wrong!");
     }
     setIsLoading(false);
-  }, [requestConfig, applyData]);
+  }, []);
   return {
     isLoading,
     error,
