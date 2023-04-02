@@ -5,8 +5,8 @@ import TaskForm from "./TaskForm";
 const NewTask = (props) => {
   const [isLoading, error, sendRequest: sendTaskRequest] = useHttp();
 
-  const creatTask = (taskText, data) => {
-    const generatedId = data.name; // firebase-specific => "name" contains generated id
+  const createTask = (taskText, taskData) => {
+    const generatedId = taskData.name; // firebase-specific => "name" contains generated id
     const createdTask = { id: generatedId, text: taskText };
     props.onAddTask(createdTask);
   };
@@ -16,12 +16,12 @@ const NewTask = (props) => {
       {
         url: "https://practicing-get-post-default-rtdb.firebaseio.com/tasks.json",
         method: "POST",
-        body: { text: taskText },
         headers: {
           "Content-Type": "application/json",
         },
+        body: { text: taskText },
       },
-      creatTask.bind(null, taskText)
+      createTask.bind(null, taskText)
     );
   };
 
