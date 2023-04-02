@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import Tasks from "./components/Tasks/Tasks";
 import NewTask from "./components/NewTask/NewTask";
+import useHttp from "./hooks/use-http";
 
 function App() {
- 
+  const [tasks, setTasks]= useState([]);
+  useHttp({
+    url:  "https://practicing-get-post-default-rtdb.firebaseio.com/tasks.json"
+  });
 
   useEffect(() => {
     fetchTasks();
