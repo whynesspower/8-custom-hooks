@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-
 import Tasks from "./components/Tasks/Tasks";
 import NewTask from "./components/NewTask/NewTask";
 import useHttp from "./hooks/use-http";
+import { useCallback } from "react/cjs/react.production.min";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const transFormTasks = (tasksObj) => {
+  
+  const transFormTasks = useCallback((tasksObj) => {
     const loadedTasks = [];
     for (const taskKey in tasksObj) {
       loadedTasks.push({ id: taskKey, text: tasksObj[taskKey].text });
     }
     setTasks(loadedTasks);
-  };
+  }, []);
 
   const {
     isLoading,
@@ -27,7 +28,7 @@ function App() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
